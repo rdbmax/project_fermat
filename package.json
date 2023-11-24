@@ -1,0 +1,17 @@
+{
+  "name": "project_fermat",
+  "version": "1.0.0",
+  "description": "Learn mathematics to children (~6yo), into the terminal.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rdb Max <rdbmax@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "enquirer": "^2.4.1"
+  },
+  "engines": {
+    "node": "16.13.0"
+  }
+}

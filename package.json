@@ -2,9 +2,11 @@
   "name": "project_fermat",
   "version": "1.0.0",
   "description": "Learn mathematics to children (from 6yo), into the terminal.",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
+    "check": "tsc",
+    "start": "npm run check && node src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rdb Max <rdbmax@gmail.com>",
@@ -15,5 +17,8 @@
   },
   "engines": {
     "node": ">=24.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+     "noEmit": true,
+     "rootDir": "./src/",
+     "target": "esnext",
+     "module": "nodenext",
+     "moduleResolution": "nodenext",
+     "rewriteRelativeImportExtensions": true,
+     "erasableSyntaxOnly": true,
+     "verbatimModuleSyntax": true,
+     "allowImportingTsExtensions": true
+  }
+} 

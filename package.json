@@ -7,7 +7,7 @@
   "scripts": {
     "check": "tsc",
     "start": "npm run check && node src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "author": "Rdb Max <rdbmax@gmail.com>",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "node": ">=24.0.2"
   },
   "devDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
   }
 }

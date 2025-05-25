@@ -1,9 +1,11 @@
-const shuffledArray = (array) => array.sort((a, b) => 0.5 - Math.random());
+export const shuffledArray = <T>(array: T[]): T[] =>
+  array.sort((a, b) => 0.5 - Math.random());
 
-const getRandomDigit = () => Math.floor(Math.random() * 10);
-const getRandomFrom0to100 = () => Math.floor(Math.random() * 101);
+export const getRandomDigit = (): number => Math.floor(Math.random() * 10);
+export const getRandomFrom0to100 = (): number =>
+  Math.floor(Math.random() * 101);
 
-const getTwoDigitsWithSumLessThanTen = () => {
+export const getTwoDigitsWithSumLessThanTen = (): [number, number] => {
   const digit1 = getRandomDigit();
 
   const factor = (digit1 - 10) * -1;
@@ -13,8 +15,10 @@ const getTwoDigitsWithSumLessThanTen = () => {
   return [digit1, digit2];
 };
 
-const askMany = async (operations) => {
-  const results = [];
+export const askMany = async (
+  operations: (() => Promise<boolean>)[]
+): Promise<void> => {
+  const results: boolean[] = [];
 
   for (let index in operations) {
     console.log("");
@@ -33,12 +37,4 @@ const askMany = async (operations) => {
   console.log("*+*+*+*+*+*+*+*+*+*+*+*+*+*+");
   console.log("*+*+*+*+*+*+*+*+*+*+*+*+*+*+");
   console.log("");
-};
-
-module.exports = {
-  shuffledArray,
-  askMany,
-  getRandomDigit,
-  getRandomFrom0to100,
-  getTwoDigitsWithSumLessThanTen,
 };

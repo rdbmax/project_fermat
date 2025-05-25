@@ -1,6 +1,11 @@
 // TODO add all the words to learn form school
 
-const englishWords = [
+type Word = string;
+type Sentence = string;
+
+type WordsWithSentence = [Word, Sentence][];
+
+const englishWords: WordsWithSentence = [
   ["bug", "This is a big bug !"],
   ["pig", "I see a pig in the farm."],
   ["car", "The car is on the road."],
@@ -13,7 +18,7 @@ const englishWords = [
   ["box", "Put it in the box please."],
 ];
 
-const frenchWords = [
+const frenchWords: WordsWithSentence = [
   ["voici", "Voici un ami."],
   ["leurs", "J'ai vu leurs vêtements."],
   ["pour", "On se retrouve pour manger."],
@@ -21,4 +26,4 @@ const frenchWords = [
   ["bien", "J'aime bien jouer."],
 ];
 
-module.exports = { englishWords, frenchWords };
+export { englishWords, frenchWords };

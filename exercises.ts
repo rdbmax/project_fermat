@@ -1,12 +1,11 @@
-const { execSync } = require("child_process");
+import { execSync } from "child_process";
+import inquirer from "inquirer";
 
-const { Confirm, NumberPrompt, StringPrompt } = require("enquirer");
-
-const {
+import {
   getRandomDigit,
   getRandomFrom0to100,
   getTwoDigitsWithSumLessThanTen,
-} = require("./helpers");
+} from "./helpers.ts";
 
 const frenchTeller = "Thomas (Enhanced)";
 const englishTeller = "Ava (Premium)";
@@ -14,20 +13,21 @@ const englishTeller = "Ava (Premium)";
 // askSimpleAddition
 // 2 digits addition
 
-const askSimpleAddition = async () => {
+export const askSimpleAddition = async () => {
   const digit1 = getRandomDigit();
   const digit2 = getRandomDigit();
 
-  const prompt = new NumberPrompt({
-    name: "response",
-    message: digit1 + " + " + digit2 + " =",
-  });
-
-  const response = await prompt.run();
+  const { simpleAdditionAnswer } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "simpleAdditionAnswer",
+      message: digit1 + " + " + digit2 + " =",
+    },
+  ]);
 
   const correctAnswer = digit1 + digit2;
 
-  if (Number(response) === correctAnswer) {
+  if (Number(simpleAdditionAnswer) === correctAnswer) {
     console.log("Bien joué 🙂");
     return true;
   } else {
@@ -39,19 +39,20 @@ const askSimpleAddition = async () => {
 // askSimpleSubstraction
 // 2 digits Substraction with positive result
 
-const askSimpleSubstraction = async () => {
+export const askSimpleSubstraction = async () => {
   const [digit2, digit1] = getTwoDigitsWithSumLessThanTen().sort();
 
-  const prompt = new NumberPrompt({
-    name: "response",
-    message: digit1 + " - " + digit2 + " =",
-  });
-
-  const response = await prompt.run();
+  const { simpleSubstractionAnswer } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "simpleSubstractionAnswer",
+      message: digit1 + " - " + digit2 + " =",
+    },
+  ]);
 
   const correctAnswer = digit1 - digit2;
 
-  if (Number(response) === correctAnswer) {
+  if (Number(simpleSubstractionAnswer) === correctAnswer) {
     console.log("Bien joué 🙂");
     return true;
   } else {
@@ -63,19 +64,22 @@ const askSimpleSubstraction = async () => {
 // QUESTION ON NUMBER
 // Listen a number and write it
 
-const listenAndWriteNumber = async () => {
+export const listenAndWriteNumber = async () => {
   const number = getRandomFrom0to100();
 
   execSync(`say -v "${frenchTeller}" "Écris le nombre ${number}"`);
 
-  const prompt = new NumberPrompt({
-    name: "response",
-    message: "Écris le nombre ?",
-  });
+  const { listenAndWriteNumberAnswer } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "listenAndWriteNumberAnswer",
+      message: "Écris le nombre ?",
+    },
+  ]);
 
-  const response = await prompt.run();
+  // const response = await prompt.run();
 
-  if (Number(response) === number) {
+  if (Number(listenAndWriteNumberAnswer) === number) {
     console.log("Bien joué 🙂");
     return true;
   } else {
@@ -87,7 +91,7 @@ const listenAndWriteNumber = async () => {
 // askSimpleNumbersAddition
 // 2 numbers addition
 
-const askSimpleNumbersAddition = async () => {
+export const askSimpleNumbersAddition = async () => {
   const [digit1Number1, digit1Number2] = getTwoDigitsWithSumLessThanTen();
   const [digit2Number1, digit2Number2] = getTwoDigitsWithSumLessThanTen();
   const [digit3Number1, digit3Number2] = getTwoDigitsWithSumLessThanTen();
@@ -96,12 +100,13 @@ const askSimpleNumbersAddition = async () => {
   console.log(`    + ${digit1Number2}${digit2Number2}${digit3Number2}`);
   console.log(`    -----`);
 
-  const prompt = new NumberPrompt({
-    name: "response",
-    message: "=",
-  });
-
-  const response = await prompt.run();
+  const { simpleNumbersAdditionAnswer } = await inquirer.prompt([
+    {
+      type: "number",
+      name: "simpleNumbersAdditionAnswer",
+      message: "=",
+    },
+  ]);
 
   const correctAnswer = Number(
     `${digit1Number1 + digit1Number2}${digit2Number1 + digit2Number2}${
@@ -109,7 +114,7 @@ const askSimpleNumbersAddition = async () => {
     }`
   );
 
-  if (Number(response) === correctAnswer) {
+  if (Number(simpleNumbersAdditionAnswer) === correctAnswer) {
     console.log("Bien joué 🙂");
     return true;
   } else {
@@ -121,7 +126,7 @@ const askSimpleNumbersAddition = async () => {
 // QUESTION ON NUMBER
 // Listen a number and write it
 
-const getListenAndWriteWord = (word, sentence, language) => async () => {
+export const getListenAndWriteWord = (word, sentence, language) => async () => {
   const storyTeller = language === "fr" ? frenchTeller : englishTeller;
   const verb = language === "fr" ? "Écris" : "Write";
   const cmdSaySentence = `say -v "${storyTeller}" "${sentence}"`;
@@ -148,39 +153,35 @@ const getListenAndWriteWord = (word, sentence, language) => async () => {
           confirm: "Go next word !",
         };
 
-  const prompt = new StringPrompt({
-    name: "response",
-    labels: labels.message,
-  });
-
-  const response = await prompt.run();
+  const { response } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "response",
+      message: labels.message,
+    },
+  ]);
 
   if (response === word) {
     // console.log(labels.messageWin);
-    const confirmPrompt = new Confirm({
-      name: "goNext",
-      message: labels.messageWin,
-    });
-
-    await confirmPrompt.run();
+    await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "confirm",
+        message: labels.messageWin,
+      },
+    ]);
 
     return true;
   } else {
     // console.log(`${labels.messageLoose} ${word}`);
-    const confirmPrompt = new Confirm({
-      name: "goNext",
-      message: `${labels.messageLoose} ${word}`,
-    });
+    await inquirer.prompt([
+      {
+        type: "confirm",
+        name: "confirm",
+        message: `${labels.messageLoose} ${word}`,
+      },
+    ]);
 
-    await confirmPrompt.run();
     return false;
   }
-};
-
-module.exports = {
-  askSimpleAddition,
-  askSimpleSubstraction,
-  listenAndWriteNumber,
-  askSimpleNumbersAddition,
-  getListenAndWriteWord,
 };
